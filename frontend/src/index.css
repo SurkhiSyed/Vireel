@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body{
+  background-image: url("../public/sea-edge-79ab30e2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: white;
+  display: flex;
+}
+
+.container{
+  width: 90vw;
+  height: 45vw;
+  background-color: rgba(34, 17, 40, 0.75);
+  backdrop-filter: blur(19px) saturate(180%);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.125);
+  display: flex;
+
+  &:hover{
+    background-color: rgba(34, 17, 40, 0.808);
+  }
+}
+
+.signInContainer{
+  width: 70vw;
+  height: 45vw;
+  background-color: rgba(34, 17, 40, 0.75);
+  backdrop-filter: blur(19px) saturate(180%);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.125);
+  display: flex;
+}
+
+.loading{
+  padding: 50px;
+  font-size: 30px;
+  border-radius: 18px;
+  background-color: rgba(17,25,40,0.9);
+}

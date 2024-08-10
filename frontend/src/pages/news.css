@@ -1,0 +1,47 @@
+.newspage{
+    flex: 1;
+    overflow: scroll;
+    /* Rest of your styles... */
+}
+
+.card {
+    background-color: gray;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin: 1rem 0;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .card-content {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+  }
+  
+  .card-summary {
+    font-size: 1rem;
+    color: black;
+  }
+  
+  .card-publisher {
+    font-size: 0.9rem;
+    color: darkgray;
+  }
+
+  .card-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    object-fit: cover;
+  }
+  
