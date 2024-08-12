@@ -174,3 +174,26 @@
     }
 
 }
+
+.center::-webkit-scrollbar {
+    width: 8px;
+}
+
+.center::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.center::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    border: 2px solid transparent;
+}
+
+.center::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.center::-webkit-scrollbar-thumb:active {
+    background-color: rgba(255, 255, 255, 0.8);
+}

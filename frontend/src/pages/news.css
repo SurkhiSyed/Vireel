@@ -1,3 +1,4 @@
+/* General Container Styling */
 .news-container {
   width: 100%;
   height: 70vh;
@@ -21,8 +22,19 @@
   gap: 2rem;
 }
 
+.liked-articles-heading {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Heading Styling */
 .news-heading {
-  font-size: 3.5rem; /* Increase the font size */
+  font-size: 3.5rem;
   font-weight: bold;
   color: #61dafb;
   margin-bottom: 1.5rem;
@@ -55,6 +67,7 @@
   background-color: rgba(255, 255, 255, 0.8);
 }
 
+/* Card Styling */
 .card {
   background-color: gray;
   border-radius: 10px;
@@ -75,11 +88,6 @@
   font-weight: bold;
 }
 
-.card-content {
-  font-size: 1rem;
-  margin: 0.5rem 0;
-}
-
 .card-summary {
   font-size: 1rem;
   color: black;
@@ -98,7 +106,7 @@
   object-fit: cover;
 }
 
-/* Comment Section Styles */
+/* Comment Section Styling */
 .comment-section {
   margin-top: 1rem;
   padding-top: 1rem;
@@ -116,6 +124,8 @@
   border: 1px solid #ccc;
   resize: none;
   font-size: 1rem;
+  color: black; /* Ensure text color is black */
+  background-color: white; /* White background for input */
 }
 
 .comment-form button {
@@ -139,32 +149,18 @@
 .comment-item {
   margin-bottom: 0.5rem;
   padding: 0.5rem;
-  background-color: #f0f0f0;
+  background-color: white; /* Ensure comment background is white */
   border-radius: 5px;
-  color: black;
+  color: black; /* Ensure text color is black */
 }
 
 .comment-item .comment-author {
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: #333; /* Darker color for author name */
 }
 
-@media (max-width: 768px) {
-  .card {
-    width: 90%;
-    max-width: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .card {
-    width: 100%;
-  }
-}
-
-/* ... existing styles ... */
-
-/* Styles for the comment popup */
+/* Comment Popup Styling */
 .comment-popup {
   position: fixed;
   top: 50%;
@@ -193,15 +189,17 @@
 }
 
 .comment-popup .comment-item {
-  background-color: #333;
+  background-color: white; /* White background for comments */
   padding: 1rem;
   margin-bottom: 0.5rem;
   border-radius: 5px;
+  color: black; /* Ensure comment text is black */
 }
 
 .comment-popup .comment-item .comment-author {
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: #333; /* Darker color for author name */
 }
 
 .comment-popup .no-comments {
@@ -221,6 +219,8 @@
   border: 1px solid #ccc;
   resize: none;
   font-size: 1rem;
+  color: black; /* Text color inside the textarea */
+  background-color: white; /* Background color inside the textarea */
 }
 
 .comment-popup button {
@@ -248,14 +248,4 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-}
-
-.liked-articles-heading {
-  font-size: 3.5rem; /* Increase the font size */
-  font-weight: bold;
-  color: #61dafb;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 2px;
 }

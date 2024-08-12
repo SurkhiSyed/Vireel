@@ -30,9 +30,6 @@ function Navbar({ signUserOut, currentUser }) {
         <li className='p-4'>
           <Link to='/'>Home</Link>
         </li>
-        <li className='p-4'>
-          <Link to='/upload'>Upload</Link>
-        </li>
         {currentUser && (
           <>
             <li className='p-4'>
@@ -68,9 +65,6 @@ function Navbar({ signUserOut, currentUser }) {
         <h1 className='w-full text-3xl font-bold text-[#00d59a] m-4'>My App</h1>
         <li className='p-4 border-b border-gray-600'>
           <Link to='/'>Home</Link>
-        </li>
-        <li className='p-4 border-b border-gray-600'>
-          <Link to='/upload'>Upload</Link>
         </li>
         {currentUser && (
           <>

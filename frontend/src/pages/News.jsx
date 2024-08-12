@@ -11,18 +11,23 @@ function News() {
   const [selectedArticle, setSelectedArticle] = useState(null); // For the popup
   const [comments, setComments] = useState([]); // Comments for the selected article
   const [commentText, setCommentText] = useState(''); // New comment text
+  const [currentUserName, setCurrentUserName] = useState(''); // Store the current user's username
 
   useEffect(() => {
     const fetchUserInterests = async () => {
       const user = auth.currentUser;
 
       if (user) {
+        // Fetch the current user's information
         const userDocRef = doc(db, 'users', user.uid);
         const userDoc = await getDoc(userDocRef);
 
         if (userDoc.exists()) {
           const interests = userDoc.data().interests || [];
           setUserInterests(interests);
+
+          // Set the current user's username
+          setCurrentUserName(userDoc.data().username || 'Unknown User');
 
           // Initialize page numbers for each interest
           const initialPageNumbers = interests.reduce((acc, interest) => {
@@ -147,7 +152,7 @@ function News() {
 
       await updateDoc(articleDocRef, {
         comments: arrayUnion({
-          author: user.email,
+          author: currentUserName, // Store the username instead of the email
           text: commentText,
           createdAt: new Date(),
         }),
@@ -156,7 +161,7 @@ function News() {
       // Update local comments state
       setComments((prevComments) => [
         ...prevComments,
-        { author: user.email, text: commentText, createdAt: new Date() },
+        { author: currentUserName, text: commentText, createdAt: new Date() },
       ]);
 
       setCommentText('');
