@@ -16,11 +16,16 @@ def get_news_by_query(category):
         page = request.args.get('page', 1, type=int)
         news_articles = fetch_news_by_query(query=category, page=page)
         if not news_articles:
-            logger.warning("No articles fetched")
+            logger.warning("No valid articles fetched")
             return jsonify([]), 200
         
         summarized_articles = summarize_articles(news_articles)
-        logger.info(f"Summarized {len(summarized_articles)} articles")
+        
+        if not summarized_articles:
+            logger.warning("No articles successfully summarized.")
+            return jsonify([]), 200
+        
+        logger.info(f"Returning {len(summarized_articles)} summarized articles.")
         return jsonify(summarized_articles)
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}", exc_info=True)

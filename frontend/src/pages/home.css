@@ -1,0 +1,90 @@
+/* General Styles */
+  
+  /* Container for the entire Home Page */
+  .home-container {
+    width: 100%; /* Full width */
+    max-width: 1200px; /* Max width for content */
+    margin: 0 auto; /* Center the container */
+    padding: 2rem;
+    background-color: rgba(34, 17, 40, 0.75);
+    backdrop-filter: blur(19px) saturate(180%);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+  }
+  
+  .home-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+  
+  .home-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  /* Input and Button Styles */
+  .home-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: black; /* Text inside the input field will be black */
+    background-color: white; /* Make the background of the input white */
+  }
+  
+  .home-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #61dafb;
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .home-button:hover {
+    background-color: #21a1f1;
+  }
+  
+  /* Flexbox and Layout Overrides */
+  .signInContainer {
+    width: 100%;
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loading {
+    padding: 50px;
+    font-size: 30px;
+    border-radius: 12px;
+    background-color: rgba(17, 25, 40, 0.9);
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .home-container {
+      padding: 1rem;
+    }
+  
+    .home-input {
+      width: 90%;
+    }
+  
+    .home-button {
+      width: 90%;
+      text-align: center;
+    }
+  }
+  

@@ -1,47 +1,261 @@
-.newspage{
-    flex: 1;
-    overflow: scroll;
-    /* Rest of your styles... */
+.news-container {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem;
+  background-color: rgba(34, 17, 40, 0.75);
+  backdrop-filter: blur(19px) saturate(180%);
+  border-radius: 12px;
+}
+
+.newspage {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.news-heading {
+  font-size: 3.5rem; /* Increase the font size */
+  font-weight: bold;
+  color: #61dafb;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Custom Scrollbar Styles */
+.newspage::-webkit-scrollbar {
+  width: 8px;
+}
+
+.newspage::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.newspage::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+.newspage::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.newspage::-webkit-scrollbar-thumb:active {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .card {
-    background-color: gray;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    margin: 1rem 0;
-    transition: transform 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .card-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .card-content {
-    font-size: 1rem;
-    margin: 0.5rem 0;
-  }
-  
-  .card-summary {
-    font-size: 1rem;
-    color: black;
-  }
-  
-  .card-publisher {
-    font-size: 0.9rem;
-    color: darkgray;
-  }
+  background-color: gray;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+  transition: transform 0.3s ease;
+}
 
-  .card-image {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    object-fit: cover;
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.card-content {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.card-summary {
+  font-size: 1rem;
+  color: black;
+}
+
+.card-publisher {
+  font-size: 0.9rem;
+  color: darkgray;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  object-fit: cover;
+}
+
+/* Comment Section Styles */
+.comment-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+.comment-form {
+  margin-top: 1rem;
+}
+
+.comment-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: none;
+  font-size: 1rem;
+}
+
+.comment-form button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.comment-form button:hover {
+  background-color: #21a1f1;
+}
+
+.comments-list {
+  margin-top: 1rem;
+}
+
+.comment-item {
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  color: black;
+}
+
+.comment-item .comment-author {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+    max-width: none;
   }
-  
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: 100%;
+  }
+}
+
+/* ... existing styles ... */
+
+/* Styles for the comment popup */
+.comment-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(34, 17, 40, 0.95);
+  border-radius: 10px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  color: white;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.comment-popup h2 {
+  margin-top: 0;
+}
+
+.comment-popup .comment-list {
+  margin-top: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.comment-popup .comment-item {
+  background-color: #333;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+}
+
+.comment-popup .comment-item .comment-author {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.comment-popup .no-comments {
+  color: #bbb;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.comment-popup form {
+  margin-top: 1rem;
+}
+
+.comment-popup textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: none;
+  font-size: 1rem;
+}
+
+.comment-popup button {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: block;
+  width: 100%;
+}
+
+.comment-popup button:hover {
+  background-color: #21a1f1;
+}
+
+/* Overlay for the popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.liked-articles-heading {
+  font-size: 3.5rem; /* Increase the font size */
+  font-weight: bold;
+  color: #61dafb;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

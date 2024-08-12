@@ -1,65 +1,100 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { db, auth } from '../firebase-config';
-import { collection, doc, setDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc, setDoc, updateDoc, arrayUnion, collection } from 'firebase/firestore';
 import './news.css';
-
-const categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
 
 function News() {
   const [news, setNews] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [page, setPage] = useState(1);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [userInterests, setUserInterests] = useState([]);
+  const [pageNumbers, setPageNumbers] = useState({});
+  const [selectedArticle, setSelectedArticle] = useState(null); // For the popup
+  const [comments, setComments] = useState([]); // Comments for the selected article
+  const [commentText, setCommentText] = useState(''); // New comment text
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const fetchUserInterests = async () => {
+      const user = auth.currentUser;
+
       if (user) {
-        setCurrentUser(user);
-      } else {
-        setCurrentUser(null);
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const interests = userDoc.data().interests || [];
+          setUserInterests(interests);
+
+          // Initialize page numbers for each interest
+          const initialPageNumbers = interests.reduce((acc, interest) => {
+            acc[interest] = 1;
+            return acc;
+          }, {});
+          setPageNumbers(initialPageNumbers);
+        }
       }
-    });
+    };
+
+    fetchUserInterests();
   }, []);
 
-  useEffect(() => {
-    if (selectedCategory) {
-      fetchNews(selectedCategory, page);
-    }
-  }, [selectedCategory, page]);
+  const fetchNewsFromAllInterests = async () => {
+    let allFetchedArticles = [];
 
-  const fetchNews = async (category, page) => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/news/${category}?page=${page}`);
-      console.log('Fetched Articles:', response.data);
-      setNews(response.data);
-    } catch (error) {
-      console.error('Error fetching news:', error);
-    }
-  };
+    for (const interest of userInterests) {
+      const currentPage = pageNumbers[interest] || 1;
 
-  const handleNextPage = () => {
-    setPage(prevPage => prevPage + 1);
-  };
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/news/${interest}?page=${currentPage}`
+        );
+        allFetchedArticles.push(...response.data);
 
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(prevPage => prevPage - 1);
+        setPageNumbers((prevPageNumbers) => ({
+          ...prevPageNumbers,
+          [interest]: prevPageNumbers[interest] + 1,
+        }));
+      } catch (error) {
+        console.error(`Error fetching news for ${interest}:`, error);
+      }
     }
+
+    const randomArticles = [];
+    for (let i = 0; i < 20; i++) {
+      const randomIndex = Math.floor(Math.random() * allFetchedArticles.length);
+      randomArticles.push(allFetchedArticles[randomIndex]);
+    }
+
+    setNews(randomArticles);
+    localStorage.setItem('news', JSON.stringify(randomArticles));
+
+    // Save each article to Firebase
+    randomArticles.forEach(async (article) => {
+      try {
+        const articleDocRef = doc(db, 'articles', encodeURIComponent(article.url));
+        await setDoc(articleDocRef, {
+          title: article.title,
+          summary: article.summary,
+          urlToImage: article.urlToImage,
+          url: article.url,
+          comments: [], // Initialize with an empty comments array
+        }, { merge: true });
+      } catch (error) {
+        console.error("Error saving article to Firestore: ", error);
+      }
+    });
   };
 
   const handleLike = async (article) => {
-    if (!currentUser) {
+    const user = auth.currentUser;
+
+    if (!user) {
       alert("You need to be logged in to like an article.");
       return;
     }
 
     try {
-      const userDocRef = doc(db, 'users', currentUser.uid);
+      const userDocRef = doc(db, 'users', user.uid);
       const likedArticlesCollection = collection(userDocRef, 'likedArticles');
-
-      // Use the URL (encoded) as the document ID
       const articleId = encodeURIComponent(article.url);
 
       await setDoc(doc(likedArticlesCollection, articleId), {
@@ -77,41 +112,109 @@ function News() {
     }
   };
 
+  const handleOpenComments = async (article) => {
+    setSelectedArticle(article);
+    try {
+      const articleDocRef = doc(db, 'articles', encodeURIComponent(article.url));
+      const articleDoc = await getDoc(articleDocRef);
+
+      if (articleDoc.exists()) {
+        setComments(articleDoc.data().comments || []);
+      }
+    } catch (error) {
+      console.error("Error loading comments: ", error);
+    }
+  };
+
+  const handleCloseComments = () => {
+    setSelectedArticle(null);
+    setComments([]);
+  };
+
+  const handleSubmitComment = async (e) => {
+    e.preventDefault();
+    if (!commentText.trim()) return;
+
+    const user = auth.currentUser;
+
+    if (!user) {
+      alert("You need to be logged in to comment.");
+      return;
+    }
+
+    try {
+      const articleDocRef = doc(db, 'articles', encodeURIComponent(selectedArticle.url));
+
+      await updateDoc(articleDocRef, {
+        comments: arrayUnion({
+          author: user.email,
+          text: commentText,
+          createdAt: new Date(),
+        }),
+      });
+
+      // Update local comments state
+      setComments((prevComments) => [
+        ...prevComments,
+        { author: user.email, text: commentText, createdAt: new Date() },
+      ]);
+
+      setCommentText('');
+    } catch (error) {
+      console.error("Error submitting comment: ", error);
+      alert("Error submitting comment.");
+    }
+  };
+
   return (
-    <div className='container'>
-      <h1>News</h1>
-      <div className='categorylist'>
-        {categories.map(category => (
-          <button 
-            key={category} 
-            onClick={() => {
-              setSelectedCategory(category);
-              setPage(1); // Reset to page 1 when changing category
-            }}
-            style={{backgroundColor: selectedCategory === category ? '#ddd' : ''}}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-      <div className='newspage'>
+    <div className="news-container">
+      <h1 className='news-heading'>News</h1>
+      <button onClick={fetchNewsFromAllInterests}>Generate New Articles</button>
+      <div className="newspage">
         {news.map((article, index) => (
-          <div className='card' key={index}>
+          <div className="card" key={index}>
             {article.urlToImage && (
-              <img src={article.urlToImage} alt={article.title} className='card-image' />
+              <img src={article.urlToImage} alt={article.title} className="card-image" />
             )}
-            <h2 className='card-title'>{article.title}</h2>
-            <p className='card-summary'>{article.summary}</p>
-            <p className='card-publisher'>Published by: {article.publisher}</p>
-            <button onClick={() => handleLike(article)} className='like-button'>Like</button>
+            <h2 className="card-title">{article.title}</h2>
+            <p className="card-summary">{article.summary}</p>
+            <p className="card-publisher">Published by: {article.publisher}</p>
+            <button onClick={() => handleLike(article)} className="like-button">Like</button>
+            <button onClick={() => handleOpenComments(article)} className="comment-button">Comments</button>
           </div>
         ))}
       </div>
-      <div className='pagination'>
-        <button onClick={handlePreviousPage} disabled={page === 1}>Previous</button>
-        <span>Page {page}</span>
-        <button onClick={handleNextPage}>Next</button>
-      </div>
+
+      {/* Comment Popup */}
+      {selectedArticle && (
+        <>
+          <div className="popup-overlay" onClick={handleCloseComments}></div>
+          <div className="comment-popup">
+            <h2>Comments for {selectedArticle.title}</h2>
+            <div className="comment-list">
+              {comments.length > 0 ? (
+                comments.map((comment, index) => (
+                  <div className="comment-item" key={index}>
+                    <div className="comment-author">{comment.author}</div>
+                    <div className="comment-text">{comment.text}</div>
+                  </div>
+                ))
+              ) : (
+                <div className="no-comments">No comments yet.</div>
+              )}
+            </div>
+            <form onSubmit={handleSubmitComment}>
+              <textarea
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                rows="3"
+                placeholder="Add a comment..."
+              />
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </>
+      )}
     </div>
   );
 }

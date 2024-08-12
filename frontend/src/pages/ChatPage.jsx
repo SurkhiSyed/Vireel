@@ -14,7 +14,6 @@ const ChatPage = () => {
         <List/>
         {chatId && <Chat/>}
         {chatId && <Detail/>}
-        <Notification/>
     </div>
   )
 }

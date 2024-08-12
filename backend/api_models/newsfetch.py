@@ -31,7 +31,7 @@ def scrape_full_article(url):
         logger.error(f"Error scraping article: {e}")
         return "Full content not available."
 
-def fetch_news_by_query(query, page=2, page_size=20):
+def fetch_news_by_query(query, page=1, page_size=6):
     url = f'https://newsapi.org/v2/everything?q={query}&pageSize={page_size}&page={page}&apiKey={NEWS_API_KEY}'
     
     response = requests.get(url)
@@ -44,12 +44,16 @@ def fetch_news_by_query(query, page=2, page_size=20):
             content_url = article.get('url')
             full_content = scrape_full_article(content_url)
             
+            if full_content == "Full content not available.":
+                logger.warning(f"Article from {content_url} has no valid content, skipping.")
+                continue  # Skip this article
+            
             video_url = extract_video_url(content_url)
             articles.append({
                 'title': article.get('title', 'No title'),
                 'content': full_content,
                 'publisher': article.get('source', {}).get('name', 'Unknown publisher'),
-                'urlToImage': article.get('urlToImage'),  # Include the image URL
+                'urlToImage': article.get('urlToImage'),
                 'video_url': video_url,
                 'url': content_url
             })

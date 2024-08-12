@@ -14,6 +14,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from './firebase-config';
 import { useUserStore } from './lib/userStore';
 import { useChatStore } from './lib/chatStore';
+import LikedArticles from './pages/LikedArticles'; // Import the new LikedArticles component
  
 function Navbar({ signUserOut, currentUser }) {
   const [nav, setNav] = useState(false);
@@ -35,19 +36,13 @@ function Navbar({ signUserOut, currentUser }) {
         {currentUser && (
           <>
             <li className='p-4'>
-              <Link to='/fileupload'>File Upload</Link>
-            </li>
-            <li className='p-4'>
-              <Link to='/googlepicker'>Google Picker</Link>
-            </li>
-            <li className='p-4'>
-              <Link to='/dataupload'>Data Upload</Link>
-            </li>
-            <li className='p-4'>
               <Link to='/chat'>Chat</Link>
             </li>
             <li className='p-4'>
               <Link to='/news'>News</Link>
+            </li>
+            <li className='p-4'>
+              <Link to='/liked-articles'>Liked Articles</Link> {/* Add the link to Liked Articles */}
             </li>
             <li className='p-4'>
               <button onClick={signUserOut}>Log Out</button>
@@ -80,19 +75,13 @@ function Navbar({ signUserOut, currentUser }) {
         {currentUser && (
           <>
             <li className='p-4 border-b border-gray-600'>
-              <Link to='/fileupload'>File Upload</Link>
-            </li>
-            <li className='p-4 border-b border-gray-600'>
-              <Link to='/googlepicker'>Google Picker</Link>
-            </li>
-            <li className='p-4 border-b border-gray-600'>
-              <Link to='/dataupload'>Data Upload</Link>
-            </li>
-            <li className='p-4 border-b border-gray-600'>
               <Link to='/chat'>Chat</Link>
             </li>
             <li className='p-4 border-b border-gray-600'>
               <Link to='/news'>News</Link>
+            </li>
+            <li className='p-4'>
+              <Link to='/liked-articles'>Liked Articles</Link> {/* Add the link to Liked Articles */}
             </li>
             <li className='p-4'>
               <button onClick={signUserOut}>Log Out</button>
@@ -141,11 +130,9 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/upload' element={<UploadData />} />
         <Route path='/login' element={<Login setIsAuth={setIsAuth} />} />
-        <Route path='/fileupload' element={<FileUpload />} />
-        <Route path='/googlepicker' element={<GooglePicker />} />
-        <Route path='/dataupload' element={<DataUpload />} />
         <Route path='/chat' element={<ChatPage />} />
         <Route path='/news' element={<News />} />
+        <Route path='/liked-articles' element={<LikedArticles />} /> {/* Add the route for LikedArticles */}
       </Routes>
     </Router>
   );
