@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-NEWS_API_KEY = '992b098b16034ba3946b887e4563962d'
+NEWS_API_KEY = '49c12beadb564b1a91a0128cc94898b7'
 
 def extract_video_url(article_url):
     response = requests.get(article_url)
@@ -31,8 +31,8 @@ def scrape_full_article(url):
         logger.error(f"Error scraping article: {e}")
         return "Full content not available."
 
-def fetch_news_by_query(query, page_size=20):
-    url = f'https://newsapi.org/v2/everything?q={query}&pageSize={page_size}&apiKey={NEWS_API_KEY}'
+def fetch_news_by_query(query, page=2, page_size=20):
+    url = f'https://newsapi.org/v2/everything?q={query}&pageSize={page_size}&page={page}&apiKey={NEWS_API_KEY}'
     
     response = requests.get(url)
     response.raise_for_status()

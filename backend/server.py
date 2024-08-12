@@ -12,16 +12,13 @@ logger = logging.getLogger(__name__)
 
 @app.route('/api/news/<string:category>')
 def get_news_by_query(category):
-    
-    # Use 'category' instead of 'query' in your function
     try:
-        news_articles = fetch_news_by_query(query=category)
-        # ... rest of your function
-        # news_articles = fetch_news_by_query(query=query)
-        #logger.info(f"Fetched {len(news_articles)} articles for query: {query}")
+        page = request.args.get('page', 1, type=int)
+        news_articles = fetch_news_by_query(query=category, page=page)
         if not news_articles:
             logger.warning("No articles fetched")
             return jsonify([]), 200
+        
         summarized_articles = summarize_articles(news_articles)
         logger.info(f"Summarized {len(summarized_articles)} articles")
         return jsonify(summarized_articles)
