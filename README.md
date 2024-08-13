@@ -36,7 +36,7 @@ Runs the app in the development mode.\
 Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
 The page will reload when you make changes.\
-You may also see any lint errors in the console.\
+You may also see any lint errors in the console.
 #### Please note that it takes some time for the backend to fetch the news articles so please wait for 3-4 minuites!
 
 
