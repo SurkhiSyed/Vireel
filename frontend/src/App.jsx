@@ -15,6 +15,7 @@ import { auth } from './firebase-config';
 import { useUserStore } from './lib/userStore';
 import { useChatStore } from './lib/chatStore';
 import LikedArticles from './pages/LikedArticles'; // Import the new LikedArticles component
+import '@fortawesome/fontawesome-svg-core/styles.css';
  
 function Navbar({ signUserOut, currentUser }) {
   const [nav, setNav] = useState(false);

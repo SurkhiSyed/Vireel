@@ -2,25 +2,21 @@ import google.generativeai as genai
 import os
 import logging
 import time
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Use environment variable for API key
-#api_key = os.getenv('GEMINI_API_KEY')
-#if not api_key:
- #   logger.error("GEMINI_API_KEY environment variable not set")
-  #  raise ValueError("GEMINI_API_KEY not set")
+genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
 
-genai.configure(api_key="AIzaSyCrzevdrYbFwmsOnFdc0O4XcYPfxavPIr8")
-
-# In your summarize_article function
 def summarize_article(content):
     if not content or content == 'No content available':
         logger.warning("No content available for summarization")
         return None
     
-    # Log the content that's being summarized
     logger.info(f"Summarizing content: {content}")
     
     try:
@@ -31,7 +27,6 @@ def summarize_article(content):
     except Exception as e:
         logger.error(f"Error summarizing article: {str(e)}", exc_info=True)
         return None
-
 
 def summarize_articles(articles):
     summaries = []

@@ -249,3 +249,11 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
+
+.like-button {
+  margin-right: 10px; /* Adjust the value as needed */
+}
+
+.comment-button {
+  margin-left: 10px; /* Adjust the value as needed */
+}

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { db, auth } from '../firebase-config';
 import { doc, getDoc, setDoc, updateDoc, arrayUnion, collection } from 'firebase/firestore';
 import './news.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faComment } from '@fortawesome/free-solid-svg-icons';
 
 function News() {
   const [news, setNews] = useState([]);
@@ -184,8 +186,12 @@ function News() {
             <h2 className="card-title">{article.title}</h2>
             <p className="card-summary">{article.summary}</p>
             <p className="card-publisher">Published by: {article.publisher}</p>
-            <button onClick={() => handleLike(article)} className="like-button">Like</button>
-            <button onClick={() => handleOpenComments(article)} className="comment-button">Comments</button>
+            <button onClick={() => handleLike(article)} className="icon-button like-button">
+              <FontAwesomeIcon icon={faHeart} />
+            </button>
+            <button onClick={() => handleOpenComments(article)} className="icon-button comment-button">
+              <FontAwesomeIcon icon={faComment} />
+            </button>
           </div>
         ))}
       </div>

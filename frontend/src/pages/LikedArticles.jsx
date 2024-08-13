@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase-config';
 import { collection, getDocs, doc } from 'firebase/firestore';
-import './news.css'; // You can reuse the existing news.css for styling
+import './news.css'; // Reuse the existing news.css for styling
 
 function LikedArticles() {
   const [likedArticles, setLikedArticles] = useState([]);
@@ -23,7 +23,7 @@ function LikedArticles() {
 
   return (
     <div className='news-container'>
-      <h1 className="liked-articles-heading">Liked Articles</h1>
+      <h1 className="news-heading">Liked Articles</h1> {/* Use the same class as the news heading */}
       <div className='newspage'>
         {likedArticles.map((article, index) => (
           <div className='card' key={index}>

@@ -2,11 +2,16 @@ import requests
 import logging
 import re
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-NEWS_API_KEY = '49c12beadb564b1a91a0128cc94898b7'
+NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 
 def extract_video_url(article_url):
     response = requests.get(article_url)
