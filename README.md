@@ -39,6 +39,10 @@ The page will reload when you make changes.\
 You may also see any lint errors in the console.
 #### Please note that it takes some time for the backend to fetch the news articles so please wait for 3-4 minuites!
 
+<img src="https://github.com/user-attachments/assets/834d68fa-907f-45b5-8597-33429703c82f" alt="Screenshot 2024-08-13 133134" width="300"/>
+<img src="https://github.com/user-attachments/assets/823a989e-fa97-41b9-a63c-b90b2a11d05d" alt="Screenshot 2024-08-13 133151" width="300"/>
+<img src="https://github.com/user-attachments/assets/ae8b15c6-904d-4792-a531-b077de8717b6" alt="Screenshot 2024-08-13 133208" width="300"/>
+<img src="https://github.com/user-attachments/assets/b3c341ff-ce9f-4d64-a2f6-08d67e75ac56" alt="Screenshot 2024-08-13 133646" width="300"/>
 
 
 # Vireel Demo
