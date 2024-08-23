@@ -45,7 +45,7 @@ You may also see any lint errors in the console.
 
 #### Please note that it takes some time for the backend to fetch the news articles so please wait for 3-4 minuites!
 
-Try it out: https://vireel.onrender.com/login
+Try it out: https://vireel.onrender.com
 
 # Vireel Demo
 https://www.youtube.com/watch?v=pxD2KdvQZ_I 
